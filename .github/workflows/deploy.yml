@@ -57,9 +57,10 @@ jobs:
           tag: ${{ steps.package-version.outputs.current-version }}
 
       - name: Test check-tag output
+        env:
+          JSON: ${{ toJson(steps.check-tag.outputs) }}
         run: |
-          echo "check-tag outputs"
-          echo ${{ toJson(steps.check-tag.outputs) }}
+          echo "$JSON"
 
       - name: Build and push container image (versioned)
         if: ${{ steps.check-tag.outputs.tag == 'not-found' }}
