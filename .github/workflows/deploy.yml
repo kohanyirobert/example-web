@@ -41,7 +41,7 @@ jobs:
           push: true
           tags: ${{ env.TAG }}
 
-      - name: Generate artifact attestation (latest)
+      - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.TAG }}
@@ -64,11 +64,3 @@ jobs:
           context: .
           push: true
           tags: ${{ env.TAG }}:${{ steps.package-version.outputs.current-version }}
-
-      - name: Generate artifact attestation (versioned)
-        if: ${{ steps.check-tag.outputs.tag }} == 'not-found'
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ${{ env.TAG }}:${{ steps.package-version.outputs.current-version }}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
