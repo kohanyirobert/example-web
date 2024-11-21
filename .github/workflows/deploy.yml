@@ -32,7 +32,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v5.3.0
         with:
-          context: ${{ inputs.path }}
+          context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
