@@ -5,6 +5,7 @@ import AddCarForm from './AddCarForm'
 const API_URL = '/api/cars'
 
 const Cars = () => {
+  const [apiHostname, setApiHostname] = useState("")
   const [cars, setCars] = useState([])
 
   const fetchCars = async () => {
@@ -12,6 +13,7 @@ const Cars = () => {
       const response = await fetch(API_URL)
       if (response.ok) {
         const data = await response.json()
+        setApiHostname(response.headers.get('X-EC2-Hostname'))
         setCars(data)
       } else {
         throw new Error(`${response.status} - ${response.statusText}`)
@@ -61,6 +63,7 @@ const Cars = () => {
 
   return (
     <div>
+      <code>web ({ import.meta.env.VITE_EC2_HOSTNAME }) =&gt; api ({ apiHostname })</code>
       <CarsList cars={cars} onDelete={deleteCar} />
       <AddCarForm onAdd={addCar} />
     </div>
